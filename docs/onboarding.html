@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Первый запуск Career OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#F5F6F2;
+  --surface:#FFFFFF;
+  --ink:#18202B;
+  --ink-2:#4F5966;
+  --ink-3:#7A838E;
+  --rule:#D8DCD3;
+  --mark:#E4F24F;
+  --mark-ink:#18202B;
+  --signal:#2B55C9;
+  --code:#ECEEE8;
+  --ok:#2E7D4F;
+  --display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11151B;
+    --surface:#171C24;
+    --ink:#E4E8EE;
+    --ink-2:#9AA4B1;
+    --ink-3:#737D89;
+    --rule:#2A313B;
+    --mark:#CFE03C;
+    --mark-ink:#11151B;
+    --signal:#86A6FF;
+    --code:#1D232C;
+    --ok:#6BC28F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11151B;
+  --surface:#171C24;
+  --ink:#E4E8EE;
+  --ink-2:#9AA4B1;
+  --ink-3:#737D89;
+  --rule:#2A313B;
+  --mark:#CFE03C;
+  --mark-ink:#11151B;
+  --signal:#86A6FF;
+  --code:#1D232C;
+  --ok:#6BC28F;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+  padding-inline:20px;
+}
+.wrap{max-width:1040px;margin-inline:auto}
+.read{max-width:680px}
+
+a{color:var(--signal);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--signal);outline-offset:2px;border-radius:3px}
+
+mark{
+  background:var(--mark);
+  color:var(--mark-ink);
+  padding:0 .18em;
+  border-radius:2px;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+code,kbd,.mono{font-family:var(--mono);font-size:.86em}
+p code,li code,td code{background:var(--code);padding:.08em .35em;border-radius:4px;white-space:nowrap}
+
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(30px,5vw,44px)}
+h2{font-size:clamp(23px,3.2vw,29px)}
+h3{font-family:var(--body);font-size:17px;font-weight:600;letter-spacing:0}
+p{margin:0}
+.lead{font-size:19px;color:var(--ink-2);line-height:1.55}
+.muted{color:var(--ink-2)}
+.small{font-size:14px;line-height:1.5}
+
+/* верхняя строка */
+.top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-block:22px;border-bottom:1px solid var(--rule);
+}
+.wordmark{font-family:var(--display);font-weight:600;font-size:17px;color:var(--ink);text-decoration:none;letter-spacing:-.01em}
+.wordmark span{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--ink-3);margin-left:8px;letter-spacing:0}
+.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
+.nav a{color:var(--ink-2);text-decoration:none}
+.nav a:hover{color:var(--ink);text-decoration:underline}
+
+/* секции */
+main{display:flex;flex-direction:column}
+section{padding-block:64px;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.stack{display:flex;flex-direction:column;gap:16px}
+
+/* первый экран */
+.hero{padding-block:56px 64px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:start}
+.hero-copy{display:flex;flex-direction:column;gap:22px}
+.hero h1 mark{padding:0 .12em}
+.cta{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.cta-label{font-size:13px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+
+/* вакансия с маркером */
+.posting{
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:10px;
+  padding:22px 22px 18px;
+  display:flex;flex-direction:column;gap:14px;
+  box-shadow:0 1px 0 var(--rule), 0 18px 40px -28px rgba(24,32,43,.35);
+}
+.posting-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.posting-title{font-weight:600;font-size:16px}
+.posting-tag{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+.posting-body{font-size:15px;line-height:1.7;color:var(--ink)}
+.posting-body ul{margin:6px 0 0;padding-left:18px}
+.match{border-top:1px dashed var(--rule);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.match-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:baseline;font-size:13px}
+.match-row .mono{color:var(--ink)}
+.pct{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.pct.low{color:var(--ink-3)}
+.score{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--ink-2);padding-top:4px}
+.score b{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.example-note{font-size:12px;color:var(--ink-3)}
+
+/* сравнение */
+.compare{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1fr) minmax(0,1fr);border-top:1px solid var(--rule)}
+.compare > div{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.5}
+.compare .h{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding-block:10px}
+.compare .facet{color:var(--ink-2);font-size:14px}
+.compare .ours{color:var(--ink)}
+
+/* код */
+.cmd{
+  display:flex;align-items:stretch;gap:0;
+  background:var(--code);border-radius:8px;overflow:hidden;
+}
+.cmd pre{margin:0;padding:12px 14px;font-family:var(--mono);font-size:14px;line-height:1.55;overflow-x:auto;flex:1;color:var(--ink)}
+.copy{
+  appearance:none;border:0;border-left:1px solid var(--rule);background:transparent;color:var(--ink-2);
+  font-family:var(--body);font-size:13px;padding:0 14px;cursor:pointer;white-space:nowrap;
+}
+.copy:hover{color:var(--ink);background:var(--rule)}
+.copy[data-done="1"]{color:var(--ok)}
+
+.install{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.install-opt{display:flex;flex-direction:column;gap:12px}
+.install-opt h3{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:500;padding:2px 8px;border-radius:99px;background:var(--mark);color:var(--mark-ink)}
+
+/* шаги */
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;counter-reset:s}
+.steps > li{
+  counter-increment:s;
+  display:grid;grid-template-columns:44px minmax(0,1fr);gap:18px;
+  padding-block:22px;border-top:1px solid var(--rule);
+}
+.steps > li:last-child{border-bottom:1px solid var(--rule)}
+.steps > li::before{
+  content:counter(s);
+  font-family:var(--display);font-size:26px;font-weight:500;line-height:1;color:var(--ink-3);
+}
+.step{display:flex;flex-direction:column;gap:10px}
+.step .time{font-size:13px;color:var(--ink-3)}
+
+.aside{
+  display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
+  margin-top:24px;font-size:15px;color:var(--ink-2);
+}
+
+/* схема */
+figure{margin:0}
+.diagram{
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;
+  padding:20px 12px 8px;overflow-x:auto;color:var(--ink);
+}
+.diagram svg{display:block;width:100%;min-width:620px;height:auto;margin-inline:auto;max-width:880px}
+figcaption{font-size:14px;color:var(--ink-2);margin-top:12px;max-width:680px}
+.d-box{fill:var(--surface);stroke:var(--ink-3);stroke-width:1}
+.d-src{fill:var(--paper);stroke:var(--rule);stroke-width:1}
+.d-core{fill:var(--mark);stroke:none}
+.d-keeper{fill:var(--surface);stroke:var(--ink);stroke-width:1.5}
+.d-t{font-family:var(--mono);font-size:13px;fill:var(--ink)}
+.d-core-t{font-family:var(--mono);font-size:14px;fill:var(--mark-ink);font-weight:500}
+.d-core-s{font-family:var(--body);font-size:12px;fill:var(--mark-ink)}
+.d-s{font-family:var(--body);font-size:12px;fill:var(--ink-2)}
+.d-lab{font-family:var(--body);font-size:12px;fill:var(--ink-2)}
+.d-lab-w{font-family:var(--body);font-size:12px;fill:var(--signal);font-weight:500}
+.d-edge{stroke:var(--ink-3);stroke-width:1.2;fill:none}
+.d-write{stroke:var(--signal);stroke-width:2;fill:none}
+.d-loop{stroke:var(--ink-3);stroke-width:1.2;fill:none;stroke-dasharray:4 4}
+.d-arrow{fill:var(--ink-3)}
+.d-arrow-w{fill:var(--signal)}
+
+.order{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:o}
+.order li{counter-increment:o;padding:16px 16px 16px 0;border-top:2px solid var(--ink);display:flex;flex-direction:column;gap:6px}
+.order li + li{padding-left:16px;border-left:1px solid var(--rule)}
+.order li::before{content:counter(o);font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.order .who{font-family:var(--mono);font-size:14px;font-weight:500}
+.order .what{font-size:14px;color:var(--ink-2);line-height:1.45}
+
+/* таблица команд */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);text-align:left;padding:0 16px 10px 0;border-bottom:1px solid var(--rule)}
+td{padding:12px 16px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+td:first-child{white-space:nowrap}
+td .who{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-top:2px}
+
+/* данные */
+.data-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.tree{margin:0;background:var(--code);border-radius:8px;padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.75;overflow-x:auto;color:var(--ink)}
+.tree .c{color:var(--ink-3)}
+.rules{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.rules li{padding-left:18px;position:relative;font-size:15px}
+.rules li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;background:var(--mark);border-radius:1px}
+
+/* проверка */
+.check-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 48px}
+.check-group{display:flex;flex-direction:column;gap:4px}
+.check-group h3{margin-bottom:8px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.check-group h3 .count{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.check{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;padding-block:9px;border-top:1px solid var(--rule);cursor:pointer}
+.check input{margin:3px 0 0;width:16px;height:16px;accent-color:var(--ink)}
+.check .do{font-size:15px;line-height:1.45}
+.check .expect{display:block;font-size:14px;color:var(--ink-2);margin-top:2px}
+.check .expect::before{content:"→ ";color:var(--ink-3)}
+.check input:checked ~ span .do{color:var(--ink-3)}
+
+.notice{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
+.notice div{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink-2)}
+.notice b{font-family:var(--display);font-weight:500;font-size:16px;color:var(--ink)}
+
+.feedback{
+  margin-top:48px;
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;
+  background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:28px;
+}
+.feedback .stack{gap:14px}
+.deeper{border-left:1px solid var(--rule);padding-left:32px;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.deeper h3{font-size:15px}
+
+footer{padding-block:28px 40px;font-size:13px;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--rule)}
+
+@media (max-width: 860px){
+  .hero-grid,.install,.data-grid,.check-grid,.feedback{grid-template-columns:minmax(0,1fr)}
+  .deeper{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:24px}
+  .order{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .order li:nth-child(3){padding-left:0;border-left:0}
+  .notice{grid-template-columns:repeat(2,minmax(0,1fr))}
+  section{padding-block:48px}
+}
+@media (max-width: 520px){
+  body{font-size:16px}
+  .compare{grid-template-columns:minmax(0,1fr)}
+  .compare .h{display:none}
+  .compare .facet{padding-bottom:0;border-bottom:0;font-weight:600;color:var(--ink);padding-top:16px}
+  .compare > div:not(.facet){padding-block:6px}
+  .compare .chat::before{content:"Обычный чат: ";color:var(--ink-3)}
+  .compare .ours::before{content:"Career OS: ";color:var(--ink-3)}
+  .order{grid-template-columns:minmax(0,1fr)}
+  .order li + li{padding-left:0;border-left:0}
+  .notice{grid-template-columns:minmax(0,1fr)}
+  .steps > li{grid-template-columns:32px minmax(0,1fr);gap:12px}
+  td:first-child{white-space:normal}
+}
+@media (prefers-reduced-motion: no-preference){
+  .copy{transition:color .15s ease, background-color .15s ease}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <a class="wordmark" href="#top">Career OS <span>0.1 · плагин для Claude Code</span></a>
+  <nav class="nav" aria-label="Разделы">
+    <a href="#install">Установка</a>
+    <a href="#start">Первый запуск</a>
+    <a href="#map">Как связано</a>
+    <a href="#commands">Команды</a>
+    <a href="#check">Проверить</a>
+    <a href="https://github.com/kaspruknikita-tech/career-os">GitHub</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <h1>Опыт записан один раз. <mark>Резюме, письмо и интервью</mark> собираются из него.</h1>
+      <p class="lead">Career OS — шесть скиллов для Claude Code над одной базой твоего опыта. Даёшь вакансию — получаешь оценку совпадения, резюме под неё, сопроводительное и подготовку к интервью. Всё из одних и тех же фактов, поэтому ничего не расходится и ничего не выдумано.</p>
+      <div class="cta">
+        <span class="cta-label">Поставить</span>
+        <div class="cmd"><pre>/plugin marketplace add kaspruknikita-tech/career-os
+/plugin install career-os</pre><button class="copy" type="button" id="copy-hero">Копировать</button></div>
+      </div>
+    </div>
+
+    <figure class="posting" aria-label="Пример: вакансия, в которой выделены требования, совпавшие с блоками опыта">
+      <div class="posting-head">
+        <span class="posting-title">Delivery Manager, финтех</span>
+        <span class="posting-tag">вакансия</span>
+      </div>
+      <div class="posting-body">
+        Ищем человека, который наведёт порядок в поставке. Требования:
+        <ul>
+          <li><mark>релиз-менеджмент</mark> в нескольких командах</li>
+          <li><mark>управление зависимостями</mark> между потоками</li>
+          <li>опыт с SAFe или LeSS</li>
+          <li><mark>работа с инцидентами</mark> и постмортемами</li>
+        </ul>
+      </div>
+      <div class="match">
+        <div class="match-row"><span class="mono">del-release-framework</span><span class="pct">82%</span></div>
+        <div class="match-row"><span class="mono">del-dependency-map</span><span class="pct">74%</span></div>
+        <div class="match-row"><span class="mono">ops-incident-postmortem</span><span class="pct">68%</span></div>
+        <div class="match-row"><span class="muted">SAFe / LeSS — блока нет</span><span class="pct low">→ gaps.md</span></div>
+        <div class="score"><span>ATS-оценка черновика</span><b>71%</b></div>
+      </div>
+      <span class="example-note">Пример. Названия блоков и цифры условные.</span>
+    </figure>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sec-head read">
+    <h2>Зачем, если можно просто спросить чат</h2>
+  </div>
+  <div class="compare" role="table" aria-label="Обычный чат и Career OS">
+    <div class="h" role="columnheader"></div>
+    <div class="h" role="columnheader">Обычный чат</div>
+    <div class="h" role="columnheader">Career OS</div>
+
+    <div class="facet" role="rowheader">Откуда факты</div>
+    <div class="chat">Пересказываешь опыт в каждом новом разговоре</div>
+    <div class="ours">Записаны один раз блоками, дальше только дополняются</div>
+
+    <div class="facet" role="rowheader">Цифры</div>
+    <div class="chat">Модель может округлить или придумать правдоподобную</div>
+    <div class="ours">Только из твоей библиотеки метрик. Цифры нет — пишется без цифры</div>
+
+    <div class="facet" role="rowheader">Резюме и письмо</div>
+    <div class="chat">Собираются независимо и противоречат друг другу</div>
+    <div class="ours">Письмо и подготовка к интервью читают changelog резюме этой вакансии</div>
+
+    <div class="facet" role="rowheader">Через месяц</div>
+    <div class="chat">Всё с нуля</div>
+    <div class="ours">Видно, какие требования рынок спрашивает чаще всего, а в базе их нет</div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="sec-head read">
+    <h2>Установка</h2>
+    <p class="muted">Нужен Claude Code. Одна из двух веток.</p>
+  </div>
+  <div class="install">
+    <div class="install-opt">
+      <h3>Плагином <span class="pill">проще</span></h3>
+      <p class="small muted">Команды и скиллы ставятся разом и обновляются вместе.</p>
+      <div class="cmd"><pre>/plugin marketplace add kaspruknikita-tech/career-os
+/plugin install career-os</pre><button class="copy" type="button" id="copy-plugin">Копировать</button></div>
+    </div>
+    <div class="install-opt">
+      <h3>Вручную</h3>
+      <p class="small muted">Если плагины не нужны. Мастер первого запуска потом спросит путь к этой папке.</p>
+      <div class="cmd"><pre>git clone https://github.com/kaspruknikita-tech/career-os.git
+cp -R career-os/skills/* ~/.claude/skills/
+cp career-os/commands/* ~/.claude/commands/</pre><button class="copy" type="button" id="copy-manual">Копировать</button></div>
+    </div>
+  </div>
+  <p class="small muted" style="margin-top:20px">Уже стоят свои скиллы с именами <code>resume-tailor</code>, <code>cover-letter</code> и подобными — временно переименуй их папки, иначе будут конфликтовать.</p>
+</section>
+
+<section id="start">
+  <div class="sec-head read">
+    <h2>Первые двадцать минут</h2>
+    <p class="muted">Три шага. Порядок важен: без ядра нечего раскладывать, без блоков не из чего собирать резюме.</p>
+  </div>
+  <ol class="steps read">
+    <li>
+      <div class="step">
+        <h3>Развернуть базу</h3>
+        <div class="cmd"><pre>/career-init</pre><button class="copy" type="button" id="copy-init">Копировать</button></div>
+        <p>Двенадцать вопросов по одному: кем работаешь, где, какие цифры готов защищать на интервью, чего точно нет. Любой можно пропустить. Перед записью покажет готовое ядро целиком и дождётся «да».</p>
+        <span class="time">около 15 минут</span>
+      </div>
+    </li>
+    <li>
+      <div class="step">
+        <h3>Загрузить старое резюме</h3>
+        <div class="cmd"><pre>/career import ~/Downloads/резюме.pdf</pre><button class="copy" type="button" id="copy-import">Копировать</button></div>
+        <p>Разложит документ на блоки опыта: один блок — один кейс одной компании. Метрики из документа пометит как непроверенные, пока ты их не подтвердишь. Самый быстрый способ наполнить базу.</p>
+        <span class="time">около 5 минут</span>
+      </div>
+    </li>
+    <li>
+      <div class="step">
+        <h3>Дать первую вакансию</h3>
+        <div class="cmd"><pre>вот вакансия: [текст], оцени фит</pre><button class="copy" type="button" id="copy-jd">Копировать</button></div>
+        <p>Классифицирует роль, посчитает совпадение, назовёт недостающие требования и спросит про них одним сообщением. Попросишь резюме — сначала покажет его в чате, файлы запишет после твоих правок.</p>
+      </div>
+    </li>
+  </ol>
+  <p class="aside read">Не понимаешь, что дальше, в любой момент — <code>/career-help</code>. Он посмотрит, что уже заполнено, и назовёт один следующий шаг.</p>
+</section>
+
+<section id="map">
+  <div class="sec-head read">
+    <h2>Кто что читает и кто пишет</h2>
+    <p class="muted">Главное правило системы: писать в базу опыта может только один скилл. Остальные читают. Иначе через месяц в базе окажется три версии одного кейса.</p>
+  </div>
+
+  <figure>
+    <div class="diagram">
+      <svg viewBox="0 0 760 460" role="img" aria-label="career-data-keeper единственный пишет в базу career-data. Её читают resume-tailor, cover-letter, interview-prep и daily-drill. Найденные пробелы возвращаются к keeper. channel-finder работает отдельно и базу не читает.">
+        <defs>
+          <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" class="d-arrow"/></marker>
+          <marker id="ahw" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" class="d-arrow-w"/></marker>
+        </defs>
+
+        <!-- входы -->
+        <rect class="d-src" x="40" y="40" width="190" height="48" rx="6"/>
+        <text class="d-s" x="135" y="60" text-anchor="middle">старое резюме,</text>
+        <text class="d-s" x="135" y="76" text-anchor="middle">перформанс-ревью</text>
+
+        <rect class="d-src" x="530" y="40" width="190" height="48" rx="6"/>
+        <text class="d-s" x="625" y="60" text-anchor="middle">твои ответы</text>
+        <text class="d-s" x="625" y="76" text-anchor="middle">на вопросы о пробеле</text>
+
+        <line class="d-edge" x1="230" y1="64" x2="276" y2="64" marker-end="url(#ah)"/>
+        <text class="d-lab" x="253" y="56" text-anchor="middle">import</text>
+        <line class="d-edge" x1="530" y1="64" x2="484" y2="64" marker-end="url(#ah)"/>
+        <text class="d-lab" x="507" y="56" text-anchor="middle">gap</text>
+
+        <!-- keeper -->
+        <rect class="d-keeper" x="280" y="36" width="200" height="56" rx="6"/>
+        <text class="d-t" x="380" y="60" text-anchor="middle">career-data-keeper</text>
+        <text class="d-s" x="380" y="78" text-anchor="middle">единственный, кто пишет</text>
+
+        <line class="d-write" x1="380" y1="92" x2="380" y2="134" marker-end="url(#ahw)"/>
+        <text class="d-lab-w" x="390" y="118">пишет</text>
+
+        <!-- база -->
+        <rect class="d-core" x="250" y="140" width="260" height="58" rx="6"/>
+        <text class="d-core-t" x="380" y="164" text-anchor="middle">career-data/</text>
+        <text class="d-core-s" x="380" y="184" text-anchor="middle">ядро · индекс · блоки · пробелы</text>
+
+        <!-- шина чтения -->
+        <line class="d-edge" x1="380" y1="198" x2="380" y2="228"/>
+        <line class="d-edge" x1="125" y1="228" x2="635" y2="228"/>
+        <text class="d-lab" x="390" y="220">читают</text>
+        <line class="d-edge" x1="125" y1="228" x2="125" y2="266" marker-end="url(#ah)"/>
+        <line class="d-edge" x1="295" y1="228" x2="295" y2="266" marker-end="url(#ah)"/>
+        <line class="d-edge" x1="465" y1="228" x2="465" y2="266" marker-end="url(#ah)"/>
+        <line class="d-edge" x1="635" y1="228" x2="635" y2="266" marker-end="url(#ah)"/>
+
+        <!-- читатели -->
+        <rect class="d-box" x="50" y="270" width="150" height="46" rx="6"/>
+        <text class="d-t" x="125" y="298" text-anchor="middle">resume-tailor</text>
+        <rect class="d-box" x="220" y="270" width="150" height="46" rx="6"/>
+        <text class="d-t" x="295" y="298" text-anchor="middle">cover-letter</text>
+        <rect class="d-box" x="390" y="270" width="150" height="46" rx="6"/>
+        <text class="d-t" x="465" y="298" text-anchor="middle">interview-prep</text>
+        <rect class="d-box" x="560" y="270" width="150" height="46" rx="6"/>
+        <text class="d-t" x="635" y="298" text-anchor="middle">daily-drill</text>
+
+        <!-- выходы -->
+        <text class="d-s" x="125" y="340" text-anchor="middle">резюме + changelog</text>
+        <text class="d-s" x="295" y="340" text-anchor="middle">письмо</text>
+        <text class="d-s" x="465" y="340" text-anchor="middle">вопросы и разбор</text>
+        <text class="d-s" x="635" y="340" text-anchor="middle">оценка ответа</text>
+
+        <!-- петли пробелов -->
+        <path class="d-loop" d="M50,293 H22 V114 H300 V96" marker-end="url(#ah)"/>
+        <text class="d-lab" x="34" y="108">нашёл пробел → gaps.md</text>
+        <path class="d-loop" d="M710,293 H738 V114 H460 V96" marker-end="url(#ah)"/>
+        <text class="d-lab" x="726" y="108" text-anchor="end">пробел после разбора</text>
+
+        <!-- channel-finder отдельно -->
+        <line class="d-edge" x1="40" y1="372" x2="720" y2="372" stroke-dasharray="2 5"/>
+        <rect class="d-box" x="50" y="394" width="170" height="46" rx="6"/>
+        <text class="d-t" x="135" y="422" text-anchor="middle">channel-finder</text>
+        <line class="d-edge" x1="220" y1="417" x2="286" y2="417" marker-end="url(#ah)"/>
+        <text class="d-t" x="296" y="421">output/компания/channels.md</text>
+        <text class="d-s" x="530" y="421">базу опыта не читает вовсе</text>
+      </svg>
+    </div>
+    <figcaption>Пишет в <code>career-data/</code> только keeper. Четыре скилла её читают, а найденные пробелы отправляют обратно через <code>gaps.md</code>. Поиск каналов отклика работает отдельно и базу не трогает.</figcaption>
+  </figure>
+
+  <h3 style="margin-top:48px">Порядок на одну вакансию</h3>
+  <ol class="order">
+    <li><span class="who">resume-tailor</span><span class="what">Оценить фит, собрать резюме. Записать changelog: какие формулировки выбраны.</span></li>
+    <li><span class="who">cover-letter</span><span class="what">Письмо на ту же вакансию. Берёт те же формулировки из changelog.</span></li>
+    <li><span class="who">channel-finder</span><span class="what">Куда отправлять: страница команды, рекрутеры, почты, каналы.</span></li>
+    <li><span class="who">interview-prep</span><span class="what">Если позвали. Вопросы с рынка и та же версия фактов, что в резюме.</span></li>
+  </ol>
+  <p class="small muted read" style="margin-top:16px">Начнёшь с письма — согласовывать его будет не с чем.</p>
+</section>
+
+<section id="commands">
+  <div class="sec-head read">
+    <h2>Команды и фразы</h2>
+    <p class="muted">Большая часть работает обычной фразой: скилл сам понимает, что от него хотят.</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Сказать</th><th>Что произойдёт</th></tr></thead>
+      <tbody>
+        <tr><td><code>/career-init</code></td><td>Развернуть базу с нуля, заполнить ядро</td></tr>
+        <tr><td><code>/career-help</code></td><td>Посмотреть, что заполнено, и получить один следующий шаг</td></tr>
+        <tr><td><code>/career-map</code></td><td>Схема связей скиллов прямо в чате</td></tr>
+        <tr><td><code>/career import &lt;файл&gt;</code><span class="who">career-data-keeper</span></td><td>Разложить документ на блоки опыта</td></tr>
+        <tr><td><code>/career gaps</code><span class="who">career-data-keeper</span></td><td>Таблица пробелов: что рынок спрашивает, а в базе нет</td></tr>
+        <tr><td>«оцени фит», «адаптируй резюме»<span class="who">resume-tailor</span></td><td>ATS-оценка вакансии, резюме из блоков под её требования</td></tr>
+        <tr><td>«напиши сопроводительное»<span class="who">cover-letter</span></td><td>Письмо на 120–180 слов, цифры только из базы</td></tr>
+        <tr><td>«подготовь к интервью»<span class="who">interview-prep</span></td><td>Вероятные вопросы с рынка, разбор кейсов, питчи</td></tr>
+        <tr><td>«куда откликаться в …»<span class="who">channel-finder</span></td><td>Страница команды, люди в LinkedIn, почты, посты с вакансиями</td></tr>
+        <tr><td><code>/drill</code><span class="who">daily-drill</span></td><td>Кейс, твой ответ вслух, разбор по четырём тактам</td></tr>
+        <tr><td><code>/drill debrief</code><span class="who">daily-drill</span></td><td>Разбор после реального интервью</td></tr>
+        <tr><td><code>/career-feedback</code></td><td>Отправить автору отзыв без личных данных</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="data">
+  <div class="data-grid">
+    <div class="stack">
+      <h2>Где лежат твои данные</h2>
+      <p class="muted">В обычной папке у тебя на диске. Мастер спросит, где её создать. Скиллы находят её сами: сначала ищут вверх от текущей папки, потом в конфиге.</p>
+<pre class="tree">~/career-os-data/
+├── career-data/   <span class="c"># опыт: ядро, индекс, блоки, пробелы</span>
+├── drill/         <span class="c"># тренировки и ошибки</span>
+├── reference/     <span class="c"># форматы и стратегии</span>
+├── scripts/       <span class="c"># экспорт в docx</span>
+└── output/        <span class="c"># отклики, по папке на вакансию</span></pre>
+      <p class="small muted">Это не код, а твой опыт. Его стоит бэкапить.</p>
+    </div>
+    <div class="stack">
+      <h2>Что система не делает</h2>
+      <ul class="rules">
+        <li>Не придумывает цифры. Нет в библиотеке метрик — пишет без цифры.</li>
+        <li>Не пишет «опыта с X нет» в резюме и письмах. На интервью — признаёт прямо, со смежным примером.</li>
+        <li>Не меняет блоки опыта под вакансию. Адаптация уходит в <code>output/</code>, оригинал цел.</li>
+        <li>Не записывает контакт без ссылки на источник. Выведенную по шаблону почту так и помечает.</li>
+        <li>Ничего не отправляет сама. Готовит — отправляешь ты.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="check">
+  <div class="sec-head read">
+    <h2>Проверить и рассказать</h2>
+    <p class="muted">Если ты пробуешь систему одним из первых — вот что стоит пройти. Около часа, старое резюме и одна живая вакансия. Галочки сохраняются в этом браузере.</p>
+  </div>
+
+  <div class="check-grid">
+    <div class="check-group" data-group="install">
+      <h3>Установка <span class="count"></span></h3>
+      <label class="check"><input type="checkbox" id="c-install-cmds"><span><span class="do">Поставить плагин</span><span class="expect">появились <code>/career-init</code>, <code>/career-help</code>, <code>/career-map</code>, <code>/career-feedback</code></span></span></label>
+      <label class="check"><input type="checkbox" id="c-install-help"><span><span class="do"><code>/career-help</code> в пустой папке</span><span class="expect">предлагает <code>/career-init</code> и больше ничего</span></span></label>
+      <label class="check"><input type="checkbox" id="c-install-map"><span><span class="do"><code>/career-map</code></span><span class="expect">схема, кто что читает и пишет</span></span></label>
+    </div>
+
+    <div class="check-group" data-group="init">
+      <h3>Первый запуск <span class="count"></span></h3>
+      <label class="check"><input type="checkbox" id="c-init-one"><span><span class="do"><code>/career-init</code></span><span class="expect">вопросы по одному, любой можно пропустить</span></span></label>
+      <label class="check"><input type="checkbox" id="c-init-nums"><span><span class="do">Не назвать цифры или назвать размыто</span><span class="expect">в ядре нет цифр, которых ты не говорил</span></span></label>
+      <label class="check"><input type="checkbox" id="c-init-confirm"><span><span class="do">Дойти до записи</span><span class="expect">ядро показано целиком и ждёт «да»</span></span></label>
+    </div>
+
+    <div class="check-group" data-group="work">
+      <h3>Работа с вакансией <span class="count"></span></h3>
+      <label class="check"><input type="checkbox" id="c-work-import"><span><span class="do"><code>/career import</code> старого резюме</span><span class="expect">черновики блоков, запись после подтверждения</span></span></label>
+      <label class="check"><input type="checkbox" id="c-work-fit"><span><span class="do">Дать вакансию, попросить оценку</span><span class="expect">процент совпадения и недостающие требования</span></span></label>
+      <label class="check"><input type="checkbox" id="c-work-resume"><span><span class="do">Попросить резюме</span><span class="expect">сначала в чате, навыки короткими тегами, цифры только из базы</span></span></label>
+      <label class="check"><input type="checkbox" id="c-work-letter"><span><span class="do">Попросить сопроводительное</span><span class="expect">120–180 слов, нет «опыта с X нет»</span></span></label>
+      <label class="check"><input type="checkbox" id="c-work-channels"><span><span class="do">«Куда откликаться в …»</span><span class="expect">у каждого контакта источник или пометка «выведен»</span></span></label>
+    </div>
+
+    <div class="check-group" data-group="other">
+      <h3>Тренировка и другая папка <span class="count"></span></h3>
+      <label class="check"><input type="checkbox" id="c-other-drill"><span><span class="do"><code>/drill</code></span><span class="expect">кейс, ждёт ответа без подсказок, разбор по T1–T4 и closing</span></span></label>
+      <label class="check"><input type="checkbox" id="c-other-folder"><span><span class="do">Открыть Claude Code в другой папке, спросить про пробелы</span><span class="expect">база находится сама</span></span></label>
+    </div>
+  </div>
+
+  <div class="notice" aria-label="Что замечать по ходу">
+    <div><b>Смутило</b>не понял, что происходит или что делать дальше</div>
+    <div><b>Выдумал</b>факт или цифра, которых ты не называл</div>
+    <div><b>Застрял</b>ошибка, ничего не произошло, ушло не туда</div>
+    <div><b>Понравилось</b>что сэкономило время или удивило</div>
+  </div>
+
+  <div class="feedback">
+    <div class="stack">
+      <h2>Отзыв — одной командой</h2>
+      <p>В конце, в той же сессии:</p>
+      <div class="cmd"><pre>/career-feedback</pre><button class="copy" type="button" id="copy-feedback">Копировать</button></div>
+      <p class="small muted">Сама вспомнит, что происходило в разговоре, задаст три коротких вопроса и уберёт всё личное: компании, контакты, цифры, тексты вакансий. Покажет черновик и после твоего «да» создаст issue на GitHub.</p>
+      <p class="small">Без Claude — <a href="https://github.com/kaspruknikita-tech/career-os/issues/new?template=feedback.yml">форма на четыре поля</a>.</p>
+    </div>
+    <div class="deeper">
+      <h3>Если хочешь глубже</h3>
+      <p class="muted">Поставь <a href="https://github.com/rebelytics/one-skill-to-rule-them-all">task-observer</a> до начала проверки. Он сам ведёт журнал: где скилл нарушил своё правило, где ты поправил методологию, где всплыл дефект.</p>
+      <p class="muted"><code>/career-feedback</code> предложит приложить его выводы — только заголовки и принципы, без контекста.</p>
+      <p class="small muted">Это дольше обычного пути, зато отзыв точнее.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>Career OS · MIT</span>
+  <a href="https://github.com/kaspruknikita-tech/career-os">github.com/kaspruknikita-tech/career-os</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var pre = btn.parentElement.querySelector("pre");
+      var text = pre ? pre.textContent : "";
+      var done = function(){
+        btn.textContent = "Скопировано";
+        btn.setAttribute("data-done","1");
+        setTimeout(function(){ btn.textContent = "Копировать"; btn.removeAttribute("data-done"); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(text); done(); });
+      } else { fallback(text); done(); }
+    });
+  });
+  function fallback(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly",""); ta.style.position="absolute"; ta.style.left="-9999px";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch(e) {}
+    document.body.removeChild(ta);
+  }
+
+  var KEY = "career-os-check";
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch(e) {}
+  function recount(){
+    document.querySelectorAll(".check-group").forEach(function(g){
+      var boxes = g.querySelectorAll("input[type=checkbox]");
+      var n = 0; boxes.forEach(function(b){ if (b.checked) n++; });
+      var c = g.querySelector(".count");
+      if (c) c.textContent = n + " из " + boxes.length;
+    });
+  }
+  document.querySelectorAll(".check input[type=checkbox]").forEach(function(b){
+    if (saved[b.id]) b.checked = true;
+    b.addEventListener("change", function(){
+      saved[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch(e) {}
+      recount();
+    });
+  });
+  recount();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+name: Отзыв
+description: Попробовал Career OS — расскажи, что сработало и что нет
+title: "Отзыв: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Быстрее всего — команда `/career-feedback` прямо в Claude Code: она сама соберёт, что происходило в сессии, и заполнит эту форму за тебя.
+
+        Не пиши сюда ничего личного: компании, контакты, цифры результатов, тексты вакансий. Нужно только поведение системы.
+  - type: textarea
+    id: ran
+    attributes:
+      label: Что запускал
+      placeholder: "/career-init, /career import, разбор вакансии, /drill…"
+    validations:
+      required: true
+  - type: textarea
+    id: broke
+    attributes:
+      label: Что сломалось или смутило
+      description: Самое важное первым. Если Claude выдумал факт или цифру — обязательно напиши.
+    validations:
+      required: true
+  - type: textarea
+    id: worked
+    attributes:
+      label: Что было полезным
+  - type: dropdown
+    id: score
+    attributes:
+      label: Продолжишь пользоваться?
+      options:
+        - "5 — точно"
+        - "4 — скорее да"
+        - "3 — не знаю"
+        - "2 — скорее нет"
+        - "1 — нет"
