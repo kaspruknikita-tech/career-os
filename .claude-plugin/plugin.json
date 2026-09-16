@@ -1,0 +1,23 @@
+{
+  "name": "career-os",
+  "version": "0.1.0",
+  "description": "Карьерная система для Claude Code: библиотека опыта с выборочной выгрузкой, адаптация резюме под вакансию, сопроводительные, подготовка к интервью, поиск каналов отклика и ежедневный тренажёр устных ответов. Шесть скиллов читают одну базу фактов, поэтому резюме, письмо и ответ на интервью не расходятся между собой.",
+  "author": {
+    "name": "Nikita Kaspruk"
+  },
+  "license": "MIT",
+  "keywords": [
+    "career",
+    "resume",
+    "cv",
+    "ats",
+    "cover-letter",
+    "interview",
+    "job-search",
+    "interview-practice"
+  ],
+  "skills": "./skills/",
+  "commands": "./commands/",
+  "repository": "https://github.com/kaspruknikita-tech/career-os",
+  "homepage": "https://github.com/kaspruknikita-tech/career-os#readme"
+}

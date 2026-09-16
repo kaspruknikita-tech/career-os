@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "career-os",
+  "description": "Карьерная система для Claude Code: одна база опыта, шесть скиллов, которые её читают",
+  "owner": {
+    "name": "Nikita Kaspruk"
+  },
+  "plugins": [
+    {
+      "name": "career-os",
+      "description": "Библиотека опыта с выборочной выгрузкой, адаптация резюме под вакансию, сопроводительные, подготовка к интервью, каналы отклика, ежедневный тренажёр устных ответов",
+      "author": {
+        "name": "Nikita Kaspruk"
+      },
+      "category": "productivity",
+      "source": "./"
+    }
+  ]
+}
