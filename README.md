@@ -108,7 +108,7 @@ cp career-os/commands/* ~/.claude/commands/
 
 Сама соберёт, что происходило, задаст три вопроса, уберёт всё личное и после твоего «да» создаст issue. Без Claude — [форма на четыре поля](https://github.com/kaspruknikita-tech/career-os/issues/new?template=feedback.yml).
 
-Визуальная версия онбординга со схемой и интерактивным чек-листом — [docs/onboarding.html](docs/onboarding.html): скачай и открой в браузере.
+Визуальная версия онбординга со схемой и интерактивным чек-листом — [kaspruknikita-tech.github.io/career-os/onboarding.html](https://kaspruknikita-tech.github.io/career-os/onboarding.html).
 
 ## Лицензия
 
