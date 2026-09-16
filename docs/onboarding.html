@@ -388,7 +388,8 @@ cp -R career-os/skills/* ~/.claude/skills/
 cp career-os/commands/* ~/.claude/commands/</pre><button class="copy" type="button" id="copy-manual">Копировать</button></div>
     </div>
   </div>
-  <p class="small muted" style="margin-top:20px">Уже стоят свои скиллы с именами <code>resume-tailor</code>, <code>cover-letter</code> и подобными — временно переименуй их папки, иначе будут конфликтовать.</p>
+  <p class="small muted" style="margin-top:20px">Для выгрузки резюме в Word нужен Python 3. Библиотеку руками ставить не надо — система сама предложит одной командой при первом экспорте.</p>
+  <p class="small muted" style="margin-top:8px">Уже стоят свои скиллы с именами <code>resume-tailor</code>, <code>cover-letter</code> и подобными — временно переименуй их папки, иначе будут конфликтовать.</p>
 </section>
 
 <section id="start">
@@ -596,6 +597,7 @@ cp career-os/commands/* ~/.claude/commands/</pre><button class="copy" type="butt
       <label class="check"><input type="checkbox" id="c-work-import"><span><span class="do"><code>/career import</code> старого резюме</span><span class="expect">черновики блоков, запись после подтверждения</span></span></label>
       <label class="check"><input type="checkbox" id="c-work-fit"><span><span class="do">Дать вакансию, попросить оценку</span><span class="expect">процент совпадения и недостающие требования</span></span></label>
       <label class="check"><input type="checkbox" id="c-work-resume"><span><span class="do">Попросить резюме</span><span class="expect">сначала в чате, навыки короткими тегами, цифры только из базы</span></span></label>
+      <label class="check"><input type="checkbox" id="c-work-docx"><span><span class="do">Попросить резюме в Word</span><span class="expect">предлагает поставить библиотеку, после «да» появляется .docx</span></span></label>
       <label class="check"><input type="checkbox" id="c-work-letter"><span><span class="do">Попросить сопроводительное</span><span class="expect">120–180 слов, нет «опыта с X нет»</span></span></label>
       <label class="check"><input type="checkbox" id="c-work-channels"><span><span class="do">«Куда откликаться в …»</span><span class="expect">у каждого контакта источник или пометка «выведен»</span></span></label>
     </div>
