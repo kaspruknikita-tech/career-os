@@ -14,6 +14,9 @@ Expected Markdown shape:
     - bullet
     - bullet
 
+Tables (| a | b |) and fenced code blocks are kept, so interview prep
+files with tables convert without losing content.
+
 Requires: pip install python-docx
 """
 import re
@@ -113,6 +116,39 @@ def add_bold_italic_runs(paragraph, text):
             paragraph.add_run(chunk)
 
 
+def is_table_row(line):
+    s = line.strip()
+    return s.startswith("|") and s.endswith("|") and len(s) > 1
+
+
+def table_cells(line):
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def add_table(doc, rows):
+    rows = [r for r in rows if not re.fullmatch(r"[\s|:\-]+", r)]
+    cells = [table_cells(r) for r in rows]
+    width = max(len(r) for r in cells)
+    table = doc.add_table(rows=len(cells), cols=width)
+    table.style = "Table Grid"
+    for i, row in enumerate(cells):
+        for j in range(width):
+            p = table.cell(i, j).paragraphs[0]
+            add_bold_italic_runs(p, row[j] if j < len(row) else "")
+            for run in p.runs:
+                run.font.size = Pt(9.5)
+                if i == 0:
+                    run.bold = True
+    doc.add_paragraph()
+
+
+def add_code(doc, code_lines):
+    p = doc.add_paragraph()
+    run = p.add_run("\n".join(code_lines))
+    run.font.name = "Courier New"
+    run.font.size = Pt(9)
+
+
 def convert(md_path, docx_path):
     with open(md_path, encoding="utf-8") as f:
         lines = f.read().splitlines()
@@ -141,8 +177,26 @@ def convert(md_path, docx_path):
     in_header = False       # between the name heading and the first real section
     header_done = False
     last_header_p = None    # last paragraph of the header block, gets the divider
-    for raw in lines:
+    table_rows, code_lines, in_code = [], [], False
+    for raw in lines + [""]:
         line = raw.rstrip()
+
+        if line.strip().startswith("```"):
+            if in_code:
+                add_code(doc, code_lines)
+                code_lines = []
+            in_code = not in_code
+            continue
+        if in_code:
+            code_lines.append(raw)
+            continue
+
+        if is_table_row(line):
+            table_rows.append(line)
+            continue
+        if table_rows:
+            add_table(doc, table_rows)
+            table_rows = []
 
         if not line or line.strip() == "---":
             continue

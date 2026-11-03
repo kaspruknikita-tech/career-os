@@ -1,0 +1,34 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Frontmatter of skills and commands
+        run: |
+          python3 - <<'EOF'
+          import pathlib, re, sys
+          bad = []
+          for p in sorted(pathlib.Path(".").glob("skills/*/SKILL.md")) + sorted(pathlib.Path("commands").glob("*.md")):
+              m = re.match(r"---\n(.*?)\n---\n", p.read_text(encoding="utf-8"), re.S)
+              if not m or "description:" not in m.group(1):
+                  bad.append(str(p))
+              elif p.name == "SKILL.md" and f"name: {p.parent.name}" not in m.group(1):
+                  bad.append(f"{p}: name does not match folder")
+          print("\n".join(bad) or "ok")
+          sys.exit(1 if bad else 0)
+          EOF
+      - name: Plugin manifests are valid JSON
+        run: python3 -m json.tool .claude-plugin/plugin.json > /dev/null && python3 -m json.tool .claude-plugin/marketplace.json > /dev/null
+      - name: Scripts compile
+        run: python3 -m py_compile template/scripts/*.py assets/readme/source/build.py
+      - name: Market collector runs on an empty base
+        run: python3 template/scripts/field.py check template/drill/market/field

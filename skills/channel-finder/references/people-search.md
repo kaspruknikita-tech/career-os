@@ -20,6 +20,8 @@
 
 Одна работа называется по-разному, компания использует ровно один вариант. Маска без перебора синонимов промахивается молча.
 
+Кто нанимает на твою роль — `role.md`, поле «Нанимающие». Нужной функции в таблице нет — собрать маску по тому же принципу: 4–8 вариантов тайтла на двух языках.
+
 | Кто нужен | Варианты в маске |
 |---|---|
 | Рекрутер | `(recruiter OR "IT recruiter" OR "tech recruiter" OR "talent acquisition" OR sourcer OR рекрутер)` |
@@ -29,6 +31,8 @@
 | Данные и аналитика | `("head of data" OR "head of analytics" OR "data director" OR "руководитель аналитики")` |
 | Операции | `(COO OR "head of operations" OR "operations director" OR "операционный директор")` |
 | Маркетинг | `(CMO OR "head of marketing" OR "директор по маркетингу")` |
+| Дизайн | `("head of design" OR "design director" OR "design lead" OR "руководитель дизайна" OR "арт-директор")` |
+| Продажи и клиенты | `("head of sales" OR CSO OR "sales director" OR "head of customer success" OR "коммерческий директор")` |
 | Верх компании | `(CEO OR founder OR "co-founder" OR CTO OR основатель)` |
 
 Русские тайтлы работают, если стоят в кавычках и запрос ограничен `site:linkedin.com/in`. Без ограничения домена русский запрос уводит выдачу в статьи и карточки компаний.

@@ -11,10 +11,12 @@ description: Схема Career OS — какие скиллы есть, кто �
 ## Что где лежит
 
 ```
+role.md          твоя профессия     пишет только /career-role
 career-data/     твой опыт          пишет только career-data-keeper
-drill/           тренажёр           пишет только daily-drill
+drill/           тренажёр и рынок   пишет daily-drill
 reference/       методология        правят люди, не скиллы
 output/          отклики            пишут resume-tailor, cover-letter, channel-finder
+pipeline.md      воронка откликов   resume-tailor, channel-finder, /career-funnel
 ```
 
 ## Кто что делает
@@ -47,6 +49,12 @@ output/          отклики            пишут resume-tailor, cover-lette
             ┌───────────────┐
    компания▶│channel-finder │──▶ output/{компания}/channels.md
             └───────────────┘    базу не трогает вообще
+
+   посты профессии ─▶ field.py ─▶ банк семян ─▶ daily-drill
+   (reddit, telegram,  сбор и      ситуации     кейсы в чужом
+    stack exchange)    выжимка     с развилкой  домене
+
+   role.md ─▶ треки тренажёра · этапы интервью · тайтлы нанимающих
 ```
 
 ## Порядок на один отклик
@@ -56,6 +64,7 @@ output/          отклики            пишут resume-tailor, cover-lette
 2. cover-letter     письмо на ту же вакансию          читает changelog резюме
 3. channel-finder   куда отправлять                   рекрутеры, почты, каналы
 4. interview-prep   если позвали                      вопросы и разбор кейсов
+5. /career-funnel   отметить отправку и ответы        какие каналы работают
 ```
 
 Порядок не случайный: `cover-letter` и `interview-prep` читают `changelog.md`, который пишет `resume-tailor`. Так резюме, письмо и устный ответ говорят одно и то же. Если начать с письма, согласовывать будет нечего.
@@ -72,8 +81,9 @@ output/          отклики            пишут resume-tailor, cover-lette
 
 - требование, под которое не нашлось блока → строка в `gaps.md`
 - методология из вакансии → строка в `drill/market/signals.md`
-- провал на тренировке → `drill/errors.md` и очередь повторов
-- реальное интервью через `/drill debrief` → и в пробелы, и в ошибки
+- провал на тренировке → `drill/errors.md`, очередь повторов и счётчик темы в `drill/errors-index.md`
+- реальное интервью через `/drill debrief` → в пробелы, в ошибки и в банк вопросов
+- отправка и ответ → `pipeline.md`; канал без ответов подсказывает `channel-finder`, где искать обход
 
 Пробелы копятся с счётчиком встреч. Тема, всплывшая трижды, — сигнал про рынок, а не про тебя: либо оформить блоком, либо учить.
 

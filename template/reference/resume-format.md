@@ -82,7 +82,7 @@ Telegram: @ник · почта@домен · linkedin.com/in/профиль · 
 2. **Контекст-абзац, 1-3 предложения** — масштаб (команда, бюджет, зона ответственности), обычным текстом, не буллетом. Обязателен даже если у роли всего 1 буллет.
 3. Буллеты
 
-Пример контекста: "Led 20+ parallel MarTech initiatives across a data ecosystem of 5 products... Up to 40 people in scope, project budgets above $3M."
+Примеры контекста: "Led 20+ parallel initiatives across a data ecosystem of 5 products. Up to 40 people in scope." (менеджмент) · "Owned the checkout flow of a marketplace with 2M monthly buyers; team of 4 designers." (дизайн) · "Backend for payments in a 30-engineer org, 1.5K RPS at peak." (разработка)
 
 **Длина контекста: 20-30 слов.** По 31 контекст-абзацу из старых резюме: медиана 22 слова, средняя 25.4, в 30 слов укладывается 77%. Контекст на 40+ слов начинает конкурировать с буллетами за внимание, а несёт меньше.
 
@@ -128,15 +128,15 @@ Telegram: @ник · почта@домен · linkedin.com/in/профиль · 
 
 **Слот 1. Тайтл + стаж + специализация.** Одно предложение.
 
-`[Тайтл, зеркалящий вакансию] with 8+ years in digital and IT and 5+ years [leading / managing / building] [специализация под вакансию] across [домены или функции]`
+`[Тайтл, зеркалящий вакансию] with [N]+ years in [отрасль] and [M]+ years [leading / building / designing] [специализация под вакансию] across [домены или функции]`
 
-Тайтл в первом слове — главный механизм адаптации, он менялся во всех 25 версиях (Engineering PM, Technical Integration PM, Delivery Manager, Strategic Operations, Product Operations, Design PM, Project/Delivery Manager). Вторая цифра стажа никогда не абстрактная: не "5+ лет в проектном управлении", а "5+ years leading cross-functional delivery across analytics, backend, QA, DevOps".
+Тайтл в первом слове — главный механизм адаптации: в исходной выборке он менялся во всех 25 версиях. Вторая цифра стажа никогда не абстрактная: не "5+ лет в дизайне", а "5+ years designing B2B onboarding and billing flows"; не "5+ лет в проектном управлении", а "5+ years leading cross-functional delivery across analytics, backend, QA".
 
 **Слот 2. Формула трансформации.** Одно предложение. Сквозная тема всех 25 версий: превращение неопределённости в управляемую систему.
 
 `Turn [хаос или неоднозначность в терминах вакансии] into [структура]: [4-6 конкретных элементов через запятую]`
 
-Наполнение списка меняется под вакансию. Delivery-роль: `clear ownership, roadmap, success metrics, risks, timelines, stakeholder alignment`. Стратегическая: `unit economics, ownership, launch criteria, governance, stakeholder alignment`. Дата-роль: `приоритеты, сроки, зоны ответственности`.
+Наполнение списка меняется под вакансию и роль. Менеджмент: `clear ownership, roadmap, success metrics, risks, timelines`. Аналитика: `metric definitions, data contracts, dashboards people actually use`. Дизайн: `research insights, design system, measurable UX goals`. Разработка: `observable services, tested releases, documented contracts`. Формула годится не каждой роли — слот можно заменить фразой о главном результате.
 
 **Слот 3. Компетенции или фокус.** Одно-два предложения.
 
@@ -180,7 +180,7 @@ Telegram: @ник · почта@домен · linkedin.com/in/профиль · 
 
 ## Секция навыков
 
-Категоризировать по 3-6 смысловым блокам с жирными подзаголовками (`Project & Delivery Management:`, `Технические компетенции:`, `Инструменты:`), 5-12 пунктов в категории через запятую. Плоский нетегированный список — только вынужденно, под платформенные ограничения (например строгий hh.ru-шаблон).
+Категоризировать по 3-6 смысловым блокам с жирными подзаголовками (`Product Design:`, `Backend:`, `Delivery Management:`, `Инструменты:`), 5-12 пунктов в категории через запятую. Плоский нетегированный список — только вынужденно, под платформенные ограничения (например строгий hh.ru-шаблон).
 
 ### Пункт это термин, а не фраза
 

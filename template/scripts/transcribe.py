@@ -9,6 +9,7 @@
 import argparse
 import datetime
 import pathlib
+import re
 import subprocess
 import sys
 import tempfile
@@ -19,14 +20,19 @@ MODEL = "mlx-community/whisper-large-v3-turbo"
 STAGES = ["screening", "hiring-manager", "tech", "final"]
 
 # Whisper глотает английские термины в русской речи: SLA слышится как "слопы".
-# Промпт задаёт словарь домена и заметно поднимает точность на терминах.
-TERMS = (
-    "Обсуждаем проектное управление и аналитику. Термины: SLA, ITIL, MTTD, MTTR, "
-    "incident management, problem management, roadmap, backlog, delivery, stakeholder, "
-    "TPM, PMO, RACI, DoR, DoD, WSJF, Scrumban, kanban, lead time, time to market, "
-    "API, S2S, postback, attribution, AppsFlyer, ClickHouse, PostgreSQL, Grafana, Tableau, "
-    "iGaming, BetBuilder, affiliate, retention, LTV, ROI, churn, unit economics."
-)
+# Промпт задаёт словарь роли и заметно поднимает точность на терминах.
+# Словарь берётся из role.md, раздел «Словарь роли»; его заполняет /career-role.
+def role_terms():
+    role = ROOT / "role.md"
+    if not role.exists():
+        return ""
+    m = re.search(r"## Словарь роли\n(.*?)(\n## |\Z)", role.read_text(encoding="utf-8"), re.S)
+    lines = [l.strip() for l in (m.group(1) if m else "").splitlines()]
+    terms = " ".join(l for l in lines if l and not l.startswith(("<", "Термины, которые")))
+    return terms
+
+
+TERMS = "Собеседование и разговор о работе. Термины: " + (role_terms() or "KPI, roadmap, stakeholder, deadline, API.")
 
 HEADER = "СЫРОЙ ТРАНСКРИПТ — не редактировать\n\n"
 
